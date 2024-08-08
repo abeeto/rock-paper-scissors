@@ -4,7 +4,21 @@
         <meta charset="utf-8">
         <title>Rock Paper Scissors!</title>
         <script>
-            console.log("hello, user!")
+
+            // PSEUDOCODE:
+            // Get computers choice:
+            // FUNCTION: getComputerChoice
+            // INIT CHOICE_INDEX as one number from 0, 1, 2 (chosen randomly). 
+            // INIT OPTIONS to be an array [rock, paper, scissors] 
+            // INIT & RETURN computerChoice to be options[choiceIndex]
+
+            function getComputerChoice(){
+                const CHOICE_INDEX = Math.floor(Math.random() * 3)
+                const OPTIONS = ["rock", "paper", "scissors"]
+                return OPTIONS[CHOICE_INDEX]
+            }
+
+            console.log(getComputerChoice())
         </script>
     </head>
     <body>
