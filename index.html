@@ -4,39 +4,45 @@
         <meta charset="utf-8">
         <title>Rock Paper Scissors!</title>
         <script>
-            const OPTIONS = ["rock", "paper", "scissors"]
+            const OPTIONS = ["ROCK", "PAPER", "SCISSORS"]
             function getComputerChoice(){
-                let choiceIndex = Math.floor(Math.random() * 3)
-                return OPTIONS[choiceIndex]
+                let choice = Math.floor(Math.random() * 3)
+                return OPTIONS[choice]
             }
 
-            function getHumanChoice() {
-                let choiceIndex;
-                while(choiceIndex !== 0 && choiceIndex !== 1 && choiceIndex !== 2){
-                    choiceIndex = parseInt(prompt("Choose an option\n0: rock\n1:paper\n2:scissors"))
+            function getHumanChoice(prevRoundMsg="") {
+                let choice;
+                while(choice !== "ROCK" && choice !== "PAPER" && choice !== "SCISSORS"){
+                    choice = prompt(`${prevRoundMsg}Choose an option\n0: rock\n1:paper\n2:scissors`).toUpperCase()
+                    console.log(choice);
+                    if (choice !== "ROCK" && choice !== "PAPER" && choice !== "SCISSORS"){
+                        prevRoundMsg="Invalid Input. Try again."
+                    }
                 }
-                return OPTIONS[choiceIndex]
+                return choice
             }
             function playGame(){
                 let humanScore = 0, computerScore = 0;
+                let roundMsg = "";
                 const playRound = (humanChoice, computerChoice) => {
                     const WHAT_BEATS = {
-                        "rock":"scissors",
-                        "paper":"rock",
-                        "scissors":"paper",
+                        "ROCK":"SCISSORS",
+                        "PAPER":"ROCK",
+                        "SCISSORS":"PAPER",
                     }
                     if(humanChoice === computerChoice){
-                        return `It's a draw. You both chose ${humanChoice}`;
+                        roundMsg = `It's a draw. You both chose ${humanChoice}. Your score: ${++humanScore} Computer Score: ${++computerScore}`;
                     }
                     else if (WHAT_BEATS[humanChoice] == computerChoice){
-                        return `You win! ${humanChoice.toUpperCase()} beats ${computerChoice.toUpperCase()}.Your score: ${++humanScore} Computer Score: ${computerScore}`
+                        roundMsg = `You win! ${humanChoice} beats ${computerChoice}.Your score: ${++humanScore} Computer Score: ${computerScore}`
                     }else{
-                        return `You lose! ${computerChoice.toUpperCase()} beats ${humanChoice.toUpperCase()}.Your score: ${humanScore} Computer Score: ${++computerScore}`
+                        roundMsg = `You lose! ${computerChoice} beats ${humanChoice}.Your score: ${humanScore} Computer Score: ${++computerScore}`
                     }
                 }
                 for (let i = 0; i < 5; i++){
-                    console.log(playRound(getHumanChoice(), getComputerChoice()));
+                    playRound(getHumanChoice(roundMsg), getComputerChoice());
                 }
+                alert(roundMsg);
             }
         </script>
     </head>
