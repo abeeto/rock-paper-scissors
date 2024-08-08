@@ -5,8 +5,8 @@
         <title>Rock Paper Scissors!</title>
         <script>
             const OPTIONS = ["rock", "paper", "scissors"]
-            let humanScore, computerScore = 0;
-            
+            let humanScore = 0, computerScore = 0;
+
             function getComputerChoice(){
                 let choiceIndex = Math.floor(Math.random() * 3)
                 return OPTIONS[choiceIndex]
@@ -16,9 +16,29 @@
                 let choiceIndex;
                 while(choiceIndex !== 0 && choiceIndex !== 1 && choiceIndex !== 2){
                     choiceIndex = parseInt(prompt("Choose an option\n0: rock\n1:paper\n2:scissors"))
-                    console.log(choiceIndex, typeof choiceIndex)
                 }
                 return OPTIONS[choiceIndex]
+            }
+            // PSEUDOCODE
+            // INIT whatBeats hashmap with option as key and value as what it beats
+            // IF computer_choice is human__choice, DRAW
+            // OTHERWISE IF computer_choice is equal to whatBeats[humanChoice], WIN
+            // ELSE LOSE
+            function playRound(humanChoice, computerChoice) {
+                const WHAT_BEATS = {
+                    "rock":"scissors",
+                    "paper":"rock",
+                    "scissors":"paper",
+                }
+
+                if(humanChoice === computerChoice){
+                    return `It's a draw. You both chose ${humanChoice}`;
+                }
+                else if (WHAT_BEATS[humanChoice] == computerChoice){
+                    return `You win! ${humanChoice.toUpperCase()} beats ${computerChoice.toUpperCase()}.Your score: ${++humanScore} Computer Score: ${computerScore}`
+                }else{
+                    return `You lose! ${computerChoice.toUpperCase()} beats ${humanChoice.toUpperCase()}.Your score: ${humanScore} Computer Score: ${++computerScore}`
+                }
             }
         </script>
     </head>
