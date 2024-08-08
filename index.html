@@ -5,17 +5,12 @@
         <title>Rock Paper Scissors!</title>
         <script>
             const OPTIONS = ["rock", "paper", "scissors"]
+            let humanScore, computerScore = 0;
+            
             function getComputerChoice(){
                 let choiceIndex = Math.floor(Math.random() * 3)
                 return OPTIONS[choiceIndex]
             }
-            // PSEUDOCODE: getHumanChoice()
-            // INIT choiceIndex
-            // DO PROMPT user to input a number from 0, 1, 2 
-            // UNTIL input entered and is one of 0, 1, 2
-            // ASSIGN user input to choiceIndex
-            // INIT OPTIONS array to be ["rock", "paper", "scissors"]
-            // RETURN the selected option using choiceIndex as element of OPTIONS array
 
             function getHumanChoice() {
                 let choiceIndex;
