@@ -6,47 +6,71 @@
     </head>
     <body>
         <script>
-            const optionsContainer = document.createElement('div');
-            optionsContainer.classList.add('container');
             const bodyHTML = document.querySelector('body');
 
-            const rockButton = document.createElement('button'),
-                  paperButton = document.createElement('button'),
-                  scissorsButton = document.createElement('button');
-            
-            rockButton.setAttribute('id', 'rock');
-            paperButton.setAttribute('id', 'paper');
-            scissorsButton.setAttribute('id', 'scissors');
-
-            rockButton.innerText = "rock", paperButton.innerText = "paper", scissorsButton.innerText = "scissors";
-            
-            const optionsButtons = [rockButton, paperButton, scissorsButton];
-
-            optionsButtons.forEach(
-                option => optionsContainer.appendChild(option)
-            )
-            
-            bodyHTML.appendChild(optionsContainer);
-
-            const resultOutputNode = document.createElement('div');
-            resultOutputNode.setAttribute('id', 'result');
-            bodyHTML.appendChild(resultOutputNode);
-
-            const OPTIONS = ["ROCK", "PAPER", "SCISSORS"]
             function getComputerChoice(){
+                const OPTIONS = ["ROCK", "PAPER", "SCISSORS"]
                 let choice = Math.floor(Math.random() * 3)
                 return OPTIONS[choice]
             }
+
+            let humanScore, computerScore, roundMsg, roundCount;
+
+            function startGame() {
+                humanScore = 0, computerScore = 0, roundCount = 0;
+                roundMsg = "";
+                const optionsContainer = document.createElement('div');
+                optionsContainer.classList.add('container');
+
+                const rockButton = document.createElement('button'),
+                  paperButton = document.createElement('button'),
+                  scissorsButton = document.createElement('button');
             
-            let humanScore = 0, computerScore = 0;
-            let roundMsg = "";
-            let roundCount = 0;
+                rockButton.setAttribute('id', 'rock');
+                paperButton.setAttribute('id', 'paper');
+                scissorsButton.setAttribute('id', 'scissors');
+
+                rockButton.innerText = "rock", paperButton.innerText = "paper", scissorsButton.innerText = "scissors";
+                
+                const optionsButtons = [rockButton, paperButton, scissorsButton];
+
+                optionsButtons.forEach(
+                    option => optionsContainer.appendChild(option)
+                )
+                optionsContainer.addEventListener('click', (e) => {
+                    switch(e.target.id) {
+                        case "paper":
+                            playRound("PAPER", getComputerChoice())
+                            break;
+                        case "rock":
+                            playRound("ROCK", getComputerChoice())
+                            break;
+                        case "scissors":
+                            playRound("SCISSORS", getComputerChoice())
+                            break;
+                        default:
+                            console.log('idk you clicked something...')
+                    }
+                })
+                bodyHTML.appendChild(optionsContainer);
+
+                const resultOutputNode = document.createElement('div');
+                resultOutputNode.setAttribute('id', 'result');
+                bodyHTML.appendChild(resultOutputNode);
+            }
 
             const playRound = (humanChoice, computerChoice) => {
                 if (humanScore === 5 || computerScore === 5) {
                     roundMsg = humanScore > computerScore ? "Congratulations, you win!" : "Oh man, better luck next time. Computer wins.";
-                    resultOutputNode.innerText = roundMsg;
-                    optionsContainer.remove();
+                    document.querySelector("#result").innerText = roundMsg;
+                    document.querySelector(".container").remove();
+                    const restartButton = document.createElement('button');
+                    restartButton.innerText = "restart";
+                    restartButton.addEventListener('click', (e) => {
+                        e.target.remove();
+                        startGame()
+                    });
+                    bodyHTML.appendChild(restartButton);
                     return;
                 }
                 const WHAT_BEATS = {
@@ -55,31 +79,17 @@
                     "SCISSORS":"PAPER",
                 }
                 if(humanChoice === computerChoice){
-                    roundMsg = `Round: ${++roundCount}. You both chose ${humanChoice}. Your score: ${humanScore} Computer Score: ${computerScore}\n`;
+                    roundMsg = `Round: ${++roundCount}. You both chose ${humanChoice}. Your score: ${humanScore} Computer Score: ${computerScore}`;
                 }
                 else if (WHAT_BEATS[humanChoice] == computerChoice){
-                    roundMsg = `Round: ${++roundCount}. Nice, you beat out computer. ${humanChoice} beats ${computerChoice}.Your score: ${++humanScore} Computer Score: ${computerScore}\n`
+                    roundMsg = `Round: ${++roundCount}. Nice, you beat out computer. ${humanChoice} beats ${computerChoice}.Your score: ${++humanScore} Computer Score: ${computerScore}`
                 }else{
-                    roundMsg = `Round: ${++roundCount}. Oof, the computer takes this one. ${computerChoice} beats ${humanChoice}.Your score: ${humanScore} Computer Score: ${++computerScore}\n`
+                    roundMsg = `Round: ${++roundCount}. Oof, the computer takes this one. ${computerChoice} beats ${humanChoice}.Your score: ${humanScore} Computer Score: ${++computerScore}`
                 }
-                resultOutputNode.innerText = roundMsg;
+                document.querySelector('#result').innerText = roundMsg;
             }
-            optionsContainer.addEventListener('click', (e) => {
-                switch(e.target.id) {
-                    case "paper":
-                        playRound("PAPER", getComputerChoice())
-                        break;
-                    case "rock":
-                        playRound("ROCK", getComputerChoice())
-                        break;
-                    case "scissors":
-                        playRound("SCISSORS", getComputerChoice())
-                        break;
-                    default:
-                        console.log('idk you clicked something...')
-                }
-            })
 
+            startGame();
         </script>
     </body>
 </html>
