@@ -6,42 +6,6 @@
     </head>
     <body>
         <script>
-            const OPTIONS = ["ROCK", "PAPER", "SCISSORS"]
-            function getComputerChoice(){
-                let choice = Math.floor(Math.random() * 3)
-                return OPTIONS[choice]
-            }
-            function getHumanChoice(prevRoundMsg="") {
-                let choice;
-                while(choice !== "ROCK" && choice !== "PAPER" && choice !== "SCISSORS"){
-                    choice = prompt(`${prevRoundMsg}Choose an option\nROCK\nPAPER\nSCISSORS`).toUpperCase()
-                    console.log(choice);
-                    if (choice !== "ROCK" && choice !== "PAPER" && choice !== "SCISSORS"){
-                        prevRoundMsg="Invalid Input. Try again."
-                    }
-                }
-                return choice
-            }
-            function playGame(){
-                let humanScore = 0, computerScore = 0;
-                let roundMsg = "";
-                const playRound = (humanChoice, computerChoice) => {
-                    const WHAT_BEATS = {
-                        "ROCK":"SCISSORS",
-                        "PAPER":"ROCK",
-                        "SCISSORS":"PAPER",
-                    }
-                    if(humanChoice === computerChoice){
-                        roundMsg = `It's a draw. You both chose ${humanChoice}. Your score: ${++humanScore} Computer Score: ${++computerScore}\n`;
-                    }
-                    else if (WHAT_BEATS[humanChoice] == computerChoice){
-                        roundMsg = `You win! ${humanChoice} beats ${computerChoice}.Your score: ${++humanScore} Computer Score: ${computerScore}\n`
-                    }else{
-                        roundMsg = `You lose! ${computerChoice} beats ${humanChoice}.Your score: ${humanScore} Computer Score: ${++computerScore}\n`
-                    }
-                }
-            }
-
             const optionsContainer = document.createElement('div');
             optionsContainer.classList.add('container');
             const bodyHTML = document.querySelector('body');
@@ -63,23 +27,59 @@
             )
             
             bodyHTML.appendChild(optionsContainer);
+
+            const resultOutputNode = document.createElement('div');
+            resultOutputNode.setAttribute('id', 'result');
+            bodyHTML.appendChild(resultOutputNode);
+
+            const OPTIONS = ["ROCK", "PAPER", "SCISSORS"]
+            function getComputerChoice(){
+                let choice = Math.floor(Math.random() * 3)
+                return OPTIONS[choice]
+            }
+            
+            let humanScore = 0, computerScore = 0;
+            let roundMsg = "";
+            let roundCount = 0;
+
+            const playRound = (humanChoice, computerChoice) => {
+                if (humanScore === 5 || computerScore === 5) {
+                    roundMsg = humanScore > computerScore ? "Congratulations, you win!" : "Oh man, better luck next time. Computer wins.";
+                    resultOutputNode.innerText = roundMsg;
+                    optionsContainer.remove();
+                    return;
+                }
+                const WHAT_BEATS = {
+                    "ROCK":"SCISSORS",
+                    "PAPER":"ROCK",
+                    "SCISSORS":"PAPER",
+                }
+                if(humanChoice === computerChoice){
+                    roundMsg = `Round: ${++roundCount}. You both chose ${humanChoice}. Your score: ${humanScore} Computer Score: ${computerScore}\n`;
+                }
+                else if (WHAT_BEATS[humanChoice] == computerChoice){
+                    roundMsg = `Round: ${++roundCount}. Nice, you beat out computer. ${humanChoice} beats ${computerChoice}.Your score: ${++humanScore} Computer Score: ${computerScore}\n`
+                }else{
+                    roundMsg = `Round: ${++roundCount}. Oof, the computer takes this one. ${computerChoice} beats ${humanChoice}.Your score: ${humanScore} Computer Score: ${++computerScore}\n`
+                }
+                resultOutputNode.innerText = roundMsg;
+            }
             optionsContainer.addEventListener('click', (e) => {
                 switch(e.target.id) {
                     case "paper":
-                        console.log('chose paper');
-                        playRound("PAPER", )
+                        playRound("PAPER", getComputerChoice())
                         break;
                     case "rock":
-                        console.log('chose rock');
+                        playRound("ROCK", getComputerChoice())
                         break;
                     case "scissors":
-                        console.log('chose scissors');
+                        playRound("SCISSORS", getComputerChoice())
                         break;
                     default:
                         console.log('idk you clicked something...')
                 }
             })
-            playGame();
+
         </script>
     </body>
 </html>
