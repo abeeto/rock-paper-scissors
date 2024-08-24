@@ -30,18 +30,14 @@
                         "SCISSORS":"PAPER",
                     }
                     if(humanChoice === computerChoice){
-                        roundMsg = `It's a draw. You both chose ${humanChoice}. Your score: ${++humanScore} Computer Score: ${++computerScore}`;
+                        roundMsg = `It's a draw. You both chose ${humanChoice}. Your score: ${++humanScore} Computer Score: ${++computerScore}\n`;
                     }
                     else if (WHAT_BEATS[humanChoice] == computerChoice){
-                        roundMsg = `You win! ${humanChoice} beats ${computerChoice}.Your score: ${++humanScore} Computer Score: ${computerScore}`
+                        roundMsg = `You win! ${humanChoice} beats ${computerChoice}.Your score: ${++humanScore} Computer Score: ${computerScore}\n`
                     }else{
-                        roundMsg = `You lose! ${computerChoice} beats ${humanChoice}.Your score: ${humanScore} Computer Score: ${++computerScore}`
+                        roundMsg = `You lose! ${computerChoice} beats ${humanChoice}.Your score: ${humanScore} Computer Score: ${++computerScore}\n`
                     }
                 }
-                for (let i = 0; i < 5; i++){
-                    playRound(getHumanChoice(roundMsg), getComputerChoice());
-                }
-                alert(roundMsg);
             }
             playGame();
         </script>
