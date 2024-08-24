@@ -3,6 +3,8 @@
     <head>
         <meta charset="utf-8">
         <title>Rock Paper Scissors!</title>
+    </head>
+    <body>
         <script>
             const OPTIONS = ["ROCK", "PAPER", "SCISSORS"]
             function getComputerChoice(){
@@ -39,9 +41,24 @@
                     }
                 }
             }
+
+            const optionsContainer = document.createElement('div');
+            optionsContainer.classList.add('container');
+            const bodyHTML = document.querySelector('body');
+
+            const rockButton = document.createElement('button'),
+                  paperButton = document.createElement('button'),
+                  scissorsButton = document.createElement('button');
+            rockButton.innerText = "rock", paperButton.innerText = "paper", scissorsButton.innerText = "scissors";
+            const optionsButtons = [rockButton, paperButton, scissorsButton];
+
+            optionsButtons.forEach(
+                option => optionsContainer.appendChild(option)
+            )
+            
+            bodyHTML.appendChild(optionsContainer);
+
             playGame();
         </script>
-    </head>
-    <body>
     </body>
 </html>
